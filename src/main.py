@@ -55,23 +55,27 @@ def parse_scholar(query: str) -> pd.DataFrame:
         except Exception as e:
             pass
 
-
+def filename(filename: str) -> str:
+    import pathlib
+    return pathlib.Path(filename).stem
 
 def main():
     import argparse
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-g','--gs', metavar='GOLDEN_STD', type=str)
-    parser.add_argument('-i', '--input', metavar='INPUT_XLSX', type=str)
+    parser.add_argument('-i', '--input', metavar='INPUT_XLSX', type=str, nargs='+')
     parser.add_argument('-o', '--output', metavar='OUTPUT_XLSX', type=str)
 
     args = parser.parse_args()
 
     gs = read_excel(args.gs)
-    rs = read_bibtex(args.input)
+
+    inputs = [(filename(rs), read_bibtex(rs)) for rs in args.input]
 
     out = gs.copy()
-    out.loc[:, 'in_result'] = gs.doi.isin(rs.doi).values
+    for rs in inputs:
+        out.loc[:, rs[0]] = gs.doi.isin(rs[1].doi).values
     write_excel(args.output, out)
 
 if __name__ == '__main__':
