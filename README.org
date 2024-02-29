@@ -1,0 +1,70 @@
+* SLR Helpers
+** Features
+Feed it the inputs and the golden standards to output a table of the golden standards vs all the inputs.
+*** User story
+Export the bibtex entries from the queries on the different engines.
+Assume name ~query1_scopus.bib~ ~query1_springer~ etc.
+This outputs a table similar to
+| title | doi  | type | keyword     | query1_scopus | query1_springer |
+|-------+------+------+-------------+---------------+-----------------|
+| gs1   | doi1 | conf | keywordlist | true          | false           |
+
+
+** Usage
+On Linux/macOS (hereby Linux) use =bash=/=zsh=\\
+On Windows use _{linux} =powershell=
+
+Ensure =Python 3= is installed
+
+*** Enable the environment
+Needs to be done once per terminal
+
+*Linux*
+
+#+begin_src sh
+source venv/bin/activate
+#+end_src
+
+*Windows*
+
+#+begin_src sh
+venv/bin/Activate.ps1
+#+end_src
+
+*** To run the golden standard comparison
+#+begin_src sh
+python src/main.py -gs golden/GoldenStandardsDOI.xlsx -o output/results.xlsx -i input/scopus.bib
+#+end_src
+
+The inputs can take a list of inputs which will each get a column in the
+results.\\
+Just replace the =scopus.bib= with a space separated list of =.bib=
+files.
+
+#+begin_quote
+  =.bib= is used as it is supported and standardized across most sites
+  and tools. =.xlsx= is supported for excel, more formats can be added
+  later.
+#+end_quote
+
+** How to Install
+Requires =python3= Go to the directory of the repository
+
+*Linux*
+
+#+begin_src sh
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+#+end_src
+
+*Windows*
+
+#+begin_src sh
+python3 -m venv venv
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+venv/bin/Activate.ps1
+pip install -r requirements.txt
+#+end_src
+
+For more info on python [[https://docs.python.org/3/library/venv.html][virtual environment]]
