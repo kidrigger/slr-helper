@@ -33,7 +33,7 @@ venv/Scripts/Activate.ps1
 
 *** To run the golden standard comparison
 #+begin_src sh
-python src/main.py -gs golden/GoldenStandardsDOI.xlsx -o output/results.xlsx -i input/scopus.bib
+python src/main.py --gs golden/GoldenStandardsDOI.xlsx -o output/results.xlsx -i input/scopus.bib
 #+end_src
 
 The inputs can take a list of inputs which will each get a column in the
